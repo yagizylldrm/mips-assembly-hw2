@@ -9,7 +9,8 @@ main:
     lw $a1, size
     jal sort
     li $v0, 10
-    syscall    
+    syscall  
+      
 swap:
     mul $t1, $a1, 4
     add $t1, $a0, $t1
@@ -17,7 +18,8 @@ swap:
     lw $t2, 4($t1)
     sw $t2, 0($t1)
     sw $t0, 4($t1)
-    jr $ra  
+    jr $ra
+    
 sort:
     subi $sp, $sp, 20
     sw $ra, 16($sp)
@@ -28,9 +30,11 @@ sort:
     move $s2, $a0
     move $s3, $a1
     move $s0, $zero
+    
     for1tst: 
     	bge $s0, $s3, exit1
     	subi $s1, $s0, 1
+    	
 	for2tst: 
     	blt $s1, 0, exit2
     	mul $t1, $s1, 4
@@ -43,9 +47,11 @@ sort:
     	jal swap
     	subi $s1, $s1, 1
     	j for2tst
+    	
 	exit2:
     	addi $s0, $s0, 1
     	j for1tst
+    	
 	exit1:
     	lw $s0, 0($sp)
     	lw $s1, 4($sp)
