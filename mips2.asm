@@ -10,6 +10,16 @@ main:
     jal sort
     li $v0, 10
     syscall
+    
+swap:
+	sll $t1, $a1, 2
+    add $t1, $a0, $t1
+    lw $t0, 0($t1)
+    lw $t2, 4($t1)
+    sw $t2, 0($t1)
+    sw $t0, 4($t1)
+    jr $ra
+    
 sort:
     addi $sp, $sp, -20
     sw $ra, 16($sp)
@@ -20,10 +30,12 @@ sort:
     move $s2, $a0
     move $s3, $a1
     move $s0, $zero
+    
     for1tst: 
 		slt $t0, $s0, $s3
 		beq $t0, $zero, exit1
     	addi $s1, $s0, -1
+    	
     for2tst: 
     	slti $t0, $s1, 0
     	bne $t0, $zero, exit2
@@ -38,9 +50,11 @@ sort:
     	jal swap
     	addi $s1, $s1, -1
     	j for2tst
+    	
     exit2:
     	addi $s0, $s0, 1
     	j for1tst
+    	
     exit1:
     	lw $s0, 0($sp)
     	lw $s1, 4($sp)
